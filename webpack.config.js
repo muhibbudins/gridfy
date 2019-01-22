@@ -4,7 +4,8 @@ const env = require('yargs').argv.env; // use --env with webpack 2
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const pkg = require('./package.json');
 
-let libraryName = pkg.name;
+let packageName = pkg.name;
+let libraryName = pkg.lib;
 let mainFile = pkg.main;
 let plugins = [], outputFile;
 
@@ -18,9 +19,9 @@ if (env === 'build') {
       }
     }
   }));
-  outputFile = libraryName + '.min.js';
+  outputFile = packageName + '.min.js';
 } else {
-  outputFile = libraryName + '.js';
+  outputFile = packageName + '.js';
 }
 
 const config = {

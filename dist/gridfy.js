@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["LibraryName"] = factory();
+		exports["Gridfy"] = factory();
 	else
-		root["LibraryName"] = factory();
+		root["Gridfy"] = factory();
 })(typeof self !== 'undefined' ? self : this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -86,77 +86,126 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _rectangle = __webpack_require__(1);
+__webpack_require__(1);
 
-var _rectangle2 = _interopRequireDefault(_rectangle);
-
-__webpack_require__(2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var SimpleMath = function () {
-  function SimpleMath(args) {
-    _classCallCheck(this, SimpleMath);
+var _class = function () {
+  function _class(args) {
+    _classCallCheck(this, _class);
 
-    console.log(args);
+    this.selector = '[data-grid]';
+    this.defaultResponsive = true;
+    this.defaultColumn = 3;
+
+    if (args.selector) this.selector = args.selector;
+
+    this.render();
   }
 
-  _createClass(SimpleMath, [{
-    key: 'getRectangle',
-    value: function getRectangle(x, y) {
-      var fx = new _rectangle2.default();
+  _createClass(_class, [{
+    key: 'render',
+    value: function render() {
+      var _this = this;
 
-      return fx.calculate(x, y);
+      var elements = document.querySelectorAll(this.selector);
+
+      elements.forEach(function (element) {
+        if (element.children) {
+          var _element$dataset = element['dataset'],
+              dynamic = _element$dataset.dynamic,
+              grid = _element$dataset.grid;
+
+
+          [].concat(_toConsumableArray(element.children)).forEach(function (child) {
+            var style = {
+              class: 'grid-item',
+              style: {}
+            };
+
+            if (child && child['classList']) {
+              style['class'] += ' ' + child.classList.value;
+            }
+
+            if (child && child['dataset']) {
+              var _child$dataset = child['dataset'],
+                  desktop = _child$dataset.desktop,
+                  tablet = _child$dataset.tablet,
+                  mobile = _child$dataset.mobile;
+
+              // Dynamic Props
+
+              if (dynamic) {
+                Object.keys(child.dataset).map(function (property) {
+                  style['style']['grid-' + property] = child.dataset[property];
+                });
+              }
+
+              // Has Desktop
+              if (desktop && window.innerWidth >= 768) {
+                _this.defaultResponsive = false;
+                desktop = desktop.split(',');
+
+                style['style']['grid-column'] = desktop[0].trim();
+                style['style']['grid-row'] = desktop[1].trim();
+              }
+
+              // Has Tablet
+              if (tablet && window.innerWidth <= 768) {
+                _this.gridResponsiveClass = false;
+                tablet = tablet.split(',');
+
+                style['style']['grid-column'] = tablet[0].trim();
+                style['style']['grid-row'] = tablet[1].trim();
+              }
+
+              // Has Mobile
+              if (mobile && window.innerWidth <= 480) {
+                _this.gridResponsiveClass = false;
+                mobile = mobile.split(',');
+
+                style['style']['grid-column'] = mobile[0].trim();
+                style['style']['grid-row'] = mobile[1].trim();
+              }
+            }
+
+            Object.keys(style.style).map(function (property) {
+              child.style[property] = style.style[property];
+            });
+
+            child.className = style.class;
+          });
+
+          // Render parent
+          if (grid) {
+            _this.defaultColumn = grid;
+          }
+
+          element.classList.add('grid');
+
+          if (_this.defaultResponsive) {
+            element.classList.add('grid-responsive');
+          }
+
+          element.style['grid-template-columns'] = 'repeat(' + _this.defaultColumn + ', 1fr)';
+        }
+      });
     }
   }]);
 
-  return SimpleMath;
+  return _class;
 }();
 
-exports.default = SimpleMath;
+exports.default = _class;
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Rectangle = function () {
-  function Rectangle(args) {
-    _classCallCheck(this, Rectangle);
-
-    this.calculate(args);
-  }
-
-  _createClass(Rectangle, [{
-    key: "calculate",
-    value: function calculate(x, y) {
-      return x * y;
-    }
-  }]);
-
-  return Rectangle;
-}();
-
-exports.default = Rectangle;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(3);
+var content = __webpack_require__(2);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -170,7 +219,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(4)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -202,21 +251,21 @@ if(false) {
 }
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
 // module
-exports.push([module.i, "html, body {\n  padding: 0; }\n\nbody {\n  width: 100%;\n  height: 100vh;\n  font-size: 48px;\n  font-weight: 400;\n  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;\n  color: #DADADA;\n  display: flex;\n  align-items: center;\n  justify-content: center; }\n", ""]);
+exports.push([module.i, ".grid {\n  display: grid;\n  grid-gap: 5px; }\n  .grid > * {\n    grid-column-start: auto;\n    grid-row-start: auto; }\n  @media (max-width: 768px) {\n    .grid-responsive {\n      grid-template-columns: repeat(1, auto) !important; }\n      .grid-responsive > .grid-item {\n        grid-column: auto !important;\n        grid-row: auto !important; } }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 /*
@@ -298,7 +347,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -364,7 +413,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(6);
+var	fixUrls = __webpack_require__(5);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -680,7 +729,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 
@@ -777,4 +826,4 @@ module.exports = function (css) {
 /***/ })
 /******/ ])["default"];
 });
-//# sourceMappingURL=LibraryName.js.map
+//# sourceMappingURL=gridfy.js.map

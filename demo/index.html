@@ -5,16 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Library Name</title>
+
+  <style>
+    .demo {
+      margin-bottom: 1rem;
+    }
+    .demo-title {
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin: 2rem;
+      display: block;
+      border-left: 5px solid #EAEAEA;
+      padding-left: 1rem;
+    }
+    .example {
+      padding: 2rem;
+      border: 1px solid #DEDEDE;
+    }
+  </style>
 </head>
 <body>
-  <div>Hello There!</div>
-  <!-- Do Stuff -->
-  <script src="../dist/LibraryName.js"></script>
+  <div class="demo">
+    <div class="demo-title">Static Grid</div>
+    <div data-grid="4">
+      <div class="example">
+        Column 1
+      </div>
+      <div class="example">
+        Column 2
+      </div>
+      <div class="example">
+        Column 2
+      </div>
+    </div>
+
+    <div class="demo-title">Dynamic Grid</div>
+    <div data-dynamic="true" data-grid="3">
+      <div data-column="1" data-row="1" class="example">
+        Column 1
+      </div>
+      <div data-column="1" data-row="2" class="example">
+        Column 1
+      </div>
+      <div data-column="2" data-row="2" class="example">
+        Column 2
+      </div>
+      <div data-column="3" data-row="3" class="example">
+        Column 2
+      </div>
+    </div>
+
+    <div class="demo-title">Auto Grid</div>
+    <div data-grid="3">
+      <div data-desktop="1, 1" data-tablet="2, 1" class="example">
+        Column 1
+      </div>
+      <div data-desktop="2, 2" data-tablet="1, 2" class="example">
+        Column 2
+      </div>
+      <div data-desktop="3, 3" data-tablet="3, 3" class="example">
+        Column 2
+      </div>
+    </div>
+
+    <div class="demo-title">Stacked Grid</div>
+    <div data-grid="3">
+      <div class="example">
+        <div data-grid="2">
+          <div class="example">
+            Column 1
+          </div>
+          <div class="example">
+            Column 2
+          </div>
+        </div>
+      </div>
+      <div class="example">
+        Column 2
+      </div>
+      <div class="example">
+        <div data-grid="2">
+          <div class="example">
+            Column 1
+          </div>
+          <div class="example">
+            Column 2
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../dist/gridfy.js"></script>
   <script>
-    var x = new LibraryName({
-      a: 'b'
+    new Gridfy({
+      selector: '[data-grid]'
     })
-    console.log(x.getRectangle(2, 2))
   </script>
 </body>
 </html>
