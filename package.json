@@ -1,7 +1,7 @@
 {
   "name": "gridfy",
   "version": "1.0.0",
-  "description": "Library Description",
+  "description": "Dynamic Layout with CSS Grid",
   "main": "/src/index.js",
   "lib": "Gridfy",
   "npmName": "gridfy",
