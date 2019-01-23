@@ -95,6 +95,10 @@ Last, run gridfy using this code :
 </script>
 ```
 
+### Related
+
+- [Gridfy Vue](https://github.com/muhibbudins/gridfy-vue)
+
 ### License
 
 This project under MIT License
