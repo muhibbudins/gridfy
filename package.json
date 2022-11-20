@@ -50,6 +50,6 @@
     "style-loader": "1.2.1",
     "uglifyjs-webpack-plugin": "2.2.0",
     "webpack": "4.43.0",
-    "yargs": "15.3.1"
+    "yargs": "17.6.2"
   }
 }
